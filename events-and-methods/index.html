@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Vue 3 Basics - Events and Methods</title>
+        <style>
+            .box {
+                background-color: purple;
+                height: 200px;
+                width: 200px;
+            }
+            .box.two {
+                background-color: red;
+            }
+            .box.three {
+                background-color: blue;
+            }
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app" v-cloak>
+            {{ greeting }}
+            <!-- keyup es un método para detectar cuando una tecla es levantada. En este caso validaremos cuando
+            el enter sea levantado dentro del input. -->
+            <!-- <input @keyup.enter="greet" v-model="greeting" type="text" name="" id=""/> -->
+            
+            <!-- Lo haremos sin el contexto del this, pasando la función dentro del evento. -->
+            <input @keyup.enter="greet(greeting + ' Gwendolyn is the best!')" v-model="greeting" type="text" name="" id=""/>
+            
+            <hr/>
+
+            <!-- MANERAS DE CREAR UN BOTON CON REACTIVIDAD EN EVENTOS DE LA MÁS FACIL A MÁS COMPLEJA-->
+
+            <!-- 1. v-on es la directiva específica para eventos ya sean los del browser o personalizados -->
+            <!-- <button v-on:click="isVisible = true">Show Box</button> -->
+
+            <!-- 2. De esta forma, convierto al botón en un toogle -->
+            <!-- <button v-on:click="isVisible = !isVisible">Toggle Box</button> -->
+            
+            <!-- 3. EL ARROBA ES LA CONTRACCIÓN PARA V-ON -->
+            <!-- <button @click="isVisible = !isVisible">Toggle Box</button> -->
+
+            <!-- 4. AHORA LO HACEMOS MÁS COMPLEJO A TRAVÉS DE UN MÉTODO -->
+            <button @click="toggleBox">Toggle Box</button>
+
+            <div v-if="isVisible" class="box"></div>
+
+        </div>
+
+        <script src="https://unpkg.com/vue@3"></script>
+        
+        <script>
+            let app = Vue.createApp({
+                data: function() {
+                    return {
+                        greeting: "¡Hello Vue 3!",
+                        isVisible: false,
+                    }
+                },
+                methods: {
+                    toggleBox() {
+                        this.isVisible = !this.isVisible
+                    },
+                    greet(greeting) {
+                        console.log(greeting)
+                    }
+                }
+            });
+            app.mount('#app');
+        </script>
+    </body>
+</html>
